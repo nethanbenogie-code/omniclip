@@ -1,0 +1,296 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>OmniClip – Capture. Point. Present.</title>
+<meta name="description" content="OmniClip is a lightweight screenshot, annotation and screen-recording tool for Windows. One small file, no install, no account, works offline.">
+<link rel="icon" href="OmniClip.ico">
+<style>
+  :root{
+    --bg:#0f1220; --bg2:#161a2e; --card:#1b2038; --text:#eef0fa; --muted:#a4a9c4;
+    --accent:#ff4d5e; --accent2:#4d8dff; --ok:#3ddc97; --line:#2a3050;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;font-family:Segoe UI,system-ui,-apple-system,Roboto,Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
+  a{color:var(--accent2);text-decoration:none}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 20px}
+  header{position:sticky;top:0;z-index:10;background:rgba(15,18,32,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+  nav{display:flex;align-items:center;justify-content:space-between;height:64px}
+  .brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:1.2rem;color:var(--text)}
+  .brand img{width:32px;height:32px;border-radius:7px}
+  nav ul{display:flex;gap:22px;list-style:none;margin:0;padding:0;align-items:center}
+  nav ul a{color:var(--muted);font-size:.95rem}
+  nav ul a:hover{color:var(--text)}
+  .btn{display:inline-block;background:var(--accent);color:#fff;font-weight:600;padding:12px 24px;border-radius:10px;border:0;cursor:pointer;font-size:1rem}
+  .btn:hover{filter:brightness(1.1)}
+  .btn.ghost{background:transparent;border:1px solid var(--line);color:var(--text)}
+  .btn.small{padding:8px 16px;font-size:.9rem}
+  .hero{padding:84px 0 64px;text-align:center;background:radial-gradient(900px 400px at 50% -10%,#2a2f66 0%,transparent 70%)}
+  .hero img.logo{width:96px;height:96px;border-radius:20px;box-shadow:0 10px 40px rgba(255,77,94,.3)}
+  .hero h1{font-size:clamp(2.2rem,6vw,3.8rem);line-height:1.1;margin:22px 0 14px}
+  .hero h1 span{color:var(--accent)}
+  .hero p.lead{font-size:1.2rem;color:var(--muted);max-width:640px;margin:0 auto 28px}
+  .hero .cta{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+  .badges{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:26px;color:var(--muted);font-size:.9rem}
+  .badges span{background:var(--bg2);border:1px solid var(--line);padding:5px 14px;border-radius:999px}
+  section{padding:68px 0}
+  section.alt{background:var(--bg2)}
+  h2{font-size:2rem;margin:0 0 10px;text-align:center}
+  .sub{color:var(--muted);text-align:center;max-width:620px;margin:0 auto 40px}
+  .grid{display:grid;gap:18px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px}
+  .card h3{margin:0 0 6px;font-size:1.1rem}
+  .card p{margin:0;color:var(--muted);font-size:.96rem}
+  .ico{font-size:1.6rem;margin-bottom:8px}
+  /* mock editor */
+  .mock{max-width:760px;margin:0 auto;border-radius:14px;overflow:hidden;border:1px solid var(--line);box-shadow:0 20px 60px rgba(0,0,0,.45)}
+  .mock .bar{background:#222846;padding:10px 14px;display:flex;gap:8px;align-items:center;font-size:.8rem;color:var(--muted)}
+  .mock .dot{width:11px;height:11px;border-radius:50%;background:#444b73}
+  .mock .tools{background:#1b2038;padding:8px 14px;display:flex;gap:6px;flex-wrap:wrap;border-bottom:1px solid var(--line)}
+  .mock .tools b{background:#272d4d;padding:3px 10px;border-radius:6px;font-size:.78rem;font-weight:600;color:var(--muted)}
+  .mock .tools b.on{background:var(--accent);color:#fff}
+  .mock svg{display:block;width:100%;height:auto;background:#f4f6fb}
+  .steps{counter-reset:s;display:grid;gap:18px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+  .step{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px;position:relative}
+  .step::before{counter-increment:s;content:counter(s);display:grid;place-items:center;width:34px;height:34px;border-radius:50%;background:var(--accent);font-weight:700;margin-bottom:10px}
+  .step h3{margin:0 0 6px}
+  .step p{margin:0;color:var(--muted);font-size:.96rem}
+  kbd{background:#272d4d;border:1px solid var(--line);border-bottom-width:2px;border-radius:6px;padding:1px 7px;font-size:.85em;color:var(--text)}
+  table{width:100%;border-collapse:collapse;max-width:760px;margin:0 auto}
+  td,th{padding:10px 14px;border-bottom:1px solid var(--line);text-align:left;font-size:.96rem}
+  th{color:var(--muted);font-weight:600}
+  td:first-child{font-weight:600}
+  .two{display:grid;gap:36px;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));align-items:start}
+  ul.check{list-style:none;padding:0;margin:0}
+  ul.check li{padding:7px 0 7px 30px;position:relative;color:var(--muted)}
+  ul.check li::before{content:"✓";position:absolute;left:0;color:var(--ok);font-weight:700}
+  ul.check li b{color:var(--text)}
+  .buy{max-width:520px;margin:0 auto;text-align:center;background:var(--card);border:1px solid var(--accent);border-radius:18px;padding:36px 28px}
+  .buy h3{margin:0 0 6px;font-size:1.5rem}
+  .buy p{color:var(--muted)}
+  details{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 18px;max-width:760px;margin:0 auto 10px}
+  summary{cursor:pointer;font-weight:600}
+  details p{color:var(--muted);margin:10px 0 0}
+  footer{padding:40px 0;border-top:1px solid var(--line);text-align:center;color:var(--muted);font-size:.9rem}
+  footer .links{display:flex;gap:20px;justify-content:center;flex-wrap:wrap;margin-bottom:12px}
+  .verify{max-width:820px;margin:0 auto}
+  .vrow{display:flex;gap:14px;align-items:flex-start;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin-bottom:12px}
+  .vrow .tick{flex:none;width:28px;height:28px;border-radius:50%;background:var(--ok);color:#0f1220;display:grid;place-items:center;font-weight:800}
+  .vrow .tick.wait{background:#f5b942}
+  .vrow h3{margin:0 0 2px;font-size:1.02rem}
+  .vrow p{margin:0;color:var(--muted);font-size:.92rem}
+  code.hash{display:block;word-break:break-all;background:#0f1220;border:1px solid var(--line);border-radius:8px;padding:8px 10px;margin-top:6px;font-size:.78rem;color:var(--text);user-select:all}
+  .beer{max-width:520px;margin:22px auto 0;text-align:center;background:var(--card);border:1px dashed var(--line);border-radius:18px;padding:26px 24px}
+  .beer h3{margin:0 0 6px;font-size:1.25rem}
+  .beer p{color:var(--muted);margin:0 0 14px}
+  .btn.beer-btn{background:#f5b942;color:#1b1400}
+  .qr{display:inline-block;background:#fff;border-radius:14px;padding:8px;margin:4px 0 12px}
+  .qr img{display:block;width:220px;max-width:100%;height:auto;border-radius:8px}
+  .qrnote{font-size:.85rem;margin:0 0 14px}
+  @media(max-width:700px){nav ul li:not(:last-child){display:none}}
+</style>
+</head>
+<body>
+
+<div style="background:var(--accent);color:#fff;text-align:center;padding:8px 12px;font-size:.92rem">Capture. Point. Present. <b>OmniClip for Windows – ₱299</b> · <a href="https://storefront.paymongo.com/mlea" style="color:#fff;text-decoration:underline" rel="noopener">Get it now</a></div>
+<header>
+  <div class="wrap">
+    <nav>
+      <a class="brand" href="#top"><img src="OmniClip-logo.png" alt="">OmniClip</a>
+      <ul>
+        <li><a href="#features">Features</a></li>
+        <li><a href="#how">How it works</a></li>
+        <li><a href="#who">Who it's for</a></li>
+        <li><a href="#safe">Safety</a></li>
+        <li><a href="#faq">FAQ</a></li>
+        <li><a class="btn small" href="https://storefront.paymongo.com/mlea" rel="noopener">Buy – ₱299</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+<div class="hero">
+  <div class="wrap">
+    <img class="logo" src="OmniClip-logo.png" alt="OmniClip logo">
+    <h1>Don't explain it.<br><span>Show it.</span></h1>
+    <p class="lead">OmniClip captures your screen, lets you mark it up with arrows, boxes and numbered steps, and records short videos with sound — all from one small Windows program.</p>
+    <div class="cta">
+      <a class="btn" href="https://storefront.paymongo.com/mlea" rel="noopener">Buy OmniClip – ₱299</a>
+      <a class="btn ghost" href="#features">See what it does</a>
+    </div>
+    <div class="badges">
+      <span>No installer</span><span>No account</span><span>Works offline</span><span>Windows 10 &amp; 11</span>
+    </div>
+  </div>
+</div>
+
+<section>
+  <div class="wrap">
+    <h2>Capture → Point → Paste</h2>
+    <p class="sub">A screenshot with an arrow beats a paragraph of instructions.</p>
+    <div class="mock">
+      <div class="bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span>&nbsp; OmniClip – annotated capture</div>
+      <img src="omniclip-demo.jpg" alt="A real screenshot marked up in OmniClip with an ellipse, a box, a spotlight and blurred text" style="display:block;width:100%;height:auto">
+    </div>
+  </div>
+</section>
+
+<section class="alt" id="features">
+  <div class="wrap">
+    <h2>Everything you need, nothing you don't</h2>
+    <p class="sub">Fast to learn, quick to use. Press a letter key to pick a tool.</p>
+    <div class="grid">
+      <div class="card"><div class="ico">📸</div><h3>Capture anything</h3><p>Region (<kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>X</kbd>), full screen, or a 3-second delay so you can open a menu first.</p></div>
+      <div class="card"><div class="ico">↗️</div><h3>Arrows, boxes, ellipses</h3><p>Point at the exact button or frame what matters. Hold Shift for straight lines and perfect shapes.</p></div>
+      <div class="card"><div class="ico">①</div><h3>Numbered steps</h3><p>Drop badges ① ② ③ to build clear step-by-step guides in seconds.</p></div>
+      <div class="card"><div class="ico">🔒</div><h3>Blur private info</h3><p>Hide names, emails and account numbers before the picture leaves your PC.</p></div>
+      <div class="card"><div class="ico">🔦</div><h3>Spotlight &amp; highlight</h3><p>Dim everything except the important part, or mark text like a real yellow highlighter.</p></div>
+      <div class="card"><div class="ico">📜</div><h3>Scrolling capture</h3><p>Grab a long page or document in one tall image; OmniClip scrolls and stitches it for you.</p></div>
+      <div class="card"><div class="ico">🔤</div><h3>Grab Text (OCR)</h3><p>Select any part of the screen and the text lands on your clipboard, ready to paste.</p></div>
+      <div class="card"><div class="ico">🎥</div><h3>Screen recording</h3><p>Record a region to MP4 with computer sound and microphone. Start/stop with <kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>R</kbd>.</p></div>
+      <div class="card"><div class="ico">🕘</div><h3>Recent history</h3><p>Your latest captures and recordings are kept in one list, so nothing gets lost.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="how">
+  <div class="wrap">
+    <h2>How it works</h2>
+    <p class="sub">From screen to slide in under a minute.</p>
+    <div class="steps">
+      <div class="step"><h3>Start it</h3><p>Double-click <b>OmniClip.exe</b>. It sits quietly in your system tray, always one keystroke away.</p></div>
+      <div class="step"><h3>Capture</h3><p>Press <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>X</kbd> and drag over what you want. Esc cancels.</p></div>
+      <div class="step"><h3>Mark it up</h3><p>Pick a tool, pick a colour, draw. Move or resize anything later with Select. Unlimited undo.</p></div>
+      <div class="step"><h3>Share</h3><p><kbd>Ctrl</kbd>+<kbd>C</kbd>, then paste into PowerPoint, Word, Teams, Messenger or email. Or save as PNG / JPG.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="alt">
+  <div class="wrap">
+    <h2>The annotation toolkit</h2>
+    <p class="sub">Every tool has a one-key shortcut.</p>
+    <table>
+      <tr><th>Tool</th><th>Key</th><th>Use it to</th></tr>
+      <tr><td>Arrow</td><td><kbd>A</kbd></td><td>Point at the exact button, menu or detail</td></tr>
+      <tr><td>Box</td><td><kbd>R</kbd></td><td>Frame an important area</td></tr>
+      <tr><td>Ellipse</td><td><kbd>E</kbd></td><td>Circle something to draw attention to it</td></tr>
+      <tr><td>Line</td><td><kbd>L</kbd></td><td>Underline or connect items</td></tr>
+      <tr><td>Text</td><td><kbd>T</kbd></td><td>Add a callout label or outlined text</td></tr>
+      <tr><td>Step</td><td><kbd>N</kbd></td><td>Numbered badges for guides</td></tr>
+      <tr><td>Highlight</td><td><kbd>H</kbd></td><td>Yellow-highlighter effect</td></tr>
+      <tr><td>Blur</td><td><kbd>B</kbd></td><td>Pixelate private information</td></tr>
+      <tr><td>Spotlight</td><td><kbd>S</kbd></td><td>Dim everything except what matters</td></tr>
+      <tr><td>Pen</td><td><kbd>P</kbd></td><td>Freehand drawing</td></tr>
+      <tr><td>Crop</td><td><kbd>C</kbd></td><td>Trim to just what you need</td></tr>
+      <tr><td>Select</td><td><kbd>V</kbd></td><td>Move, resize, recolour or delete</td></tr>
+    </table>
+  </div>
+</section>
+
+<section id="who">
+  <div class="wrap">
+    <h2>Who it's for</h2>
+    <p class="sub">Anyone who has ever typed “click the button at the top… no, the other one.”</p>
+    <div class="grid">
+      <div class="card"><div class="ico">👩‍🏫</div><h3>Teachers</h3><p>Turn any screenshot into a clear lesson slide or activity guide.</p></div>
+      <div class="card"><div class="ico">🎤</div><h3>Presenters &amp; trainers</h3><p>Show your audience exactly where to look.</p></div>
+      <div class="card"><div class="ico">🛠️</div><h3>IT support</h3><p>Send one annotated screenshot instead of a long explanation.</p></div>
+      <div class="card"><div class="ico">📝</div><h3>Students &amp; office workers</h3><p>Make reports, tutorials and documentation look professional.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="alt">
+  <div class="wrap two">
+    <div>
+      <h2 style="text-align:left">Why people like it</h2>
+      <ul class="check">
+        <li><b>Tiny and fast.</b> One file of about 10 MB. No installer, no setup.</li>
+        <li><b>Private.</b> OmniClip doesn't upload anything. Your captures stay on your computer.</li>
+        <li><b>No account to create.</b> Activate once with the email you paid with, then it works offline.</li>
+        <li><b>Saves real time.</b> Capture, mark, paste — instead of Paint, save, find, insert.</li>
+        <li><b>Stays out of the way.</b> Lives in the tray; optional Start with Windows.</li>
+      </ul>
+    </div>
+    <div>
+      <h2 style="text-align:left">Requirements</h2>
+      <ul class="check">
+        <li>Windows 10 or Windows 11 (64-bit)</li>
+        <li>Internet needed once, to activate with your purchase email</li>
+        <li>Microphone optional for recording with voice</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="get">
+  <div class="wrap">
+    <div class="buy">
+      <img src="OmniClip-logo.png" alt="" width="64" height="64" style="border-radius:14px">
+      <h3>Get OmniClip</h3>
+      <p>Capture. Point. Present. One file, yours to keep.</p>
+      <!-- TODO: replace # with your PayPal / Payhip / Gumroad link, and add the price here -->
+      <div style="font-size:2rem;font-weight:700;margin:4px 0 10px">₱299</div>
+      <a class="btn" href="https://storefront.paymongo.com/mlea" id="buy-link" rel="noopener">Buy OmniClip with PayMongo</a>
+      <p style="font-size:.85rem;margin:10px 0 0">Pay with GCash, Maya, QR Ph, cards or online banking. After payment, we email your download link within 2–3 hours.</p>
+      <p style="font-size:.85rem;margin:10px 0 0"><a href="#safe">Virus scan results and file fingerprint</a> · Support: <a href="mailto:etzchaim06@gmail.com?subject=OmniClip%20support">etzchaim06@gmail.com</a></p>
+      <p style="font-size:.85rem;margin-top:14px">Windows 10 &amp; 11 · installer about 5 MB</p>
+    </div>
+    <div class="beer">
+      <div style="font-size:2rem">🍺</div>
+      <h3>Buy me a beer</h3>
+      <p>OmniClip is made by one person. If it saves you time, a small tip keeps it improving. Totally optional, and thank you!</p>
+      <div class="qr"><img src="qrph-qr.png" alt="QR Ph code for tips. Scan with your bank or e-wallet app."></div>
+      <p class="qrnote">Scan with GCash, Maya or any banking app (QR Ph), or tip with PayPal below.</p>
+      <!-- TODO: replace # with your PayPal.Me link (e.g. https://paypal.me/yourname) -->
+      <a class="btn beer-btn" href="#" id="beer-link" rel="noopener">🍺 Send a tip via PayPal</a>
+    </div>
+  </div>
+</section>
+
+<section id="safe">
+  <div class="wrap verify">
+    <h2>Safe to run. Check it yourself.</h2>
+    <p class="sub">OmniClip is not yet code-signed, so Windows may show a SmartScreen warning on first run. Here is how to confirm your download is the real, clean file.</p>
+    <div class="vrow"><div class="tick">✓</div><div><h3>Microsoft Defender: no threats found</h3><p>Both the installer and OmniClip.exe were scanned with Microsoft Defender (signature version 1.459.514.0) on 2 October 2026.</p></div></div>
+    <div class="vrow"><div class="tick wait">…</div><div><h3>VirusTotal report</h3><p>Scan with 70+ antivirus engines. <!-- TODO: paste the VirusTotal report links below once the files are uploaded, and fill in the result (for example 0 / 70) --><a href="https://www.virustotal.com/gui/file/6778E07EE54E6C31CDFCBBA22C51133DC4DCAB29A7A07FD5A53B5E2F8AACE607" rel="noopener">Look up the installer on VirusTotal</a> · <a href="https://www.virustotal.com/gui/file/960AFC46CE86771D3B8C3EA77B8405B8E29F637B6F4BDF41509DD4F3D1C05379" rel="noopener">Look up OmniClip.exe</a></p></div></div>
+    <div class="vrow"><div class="tick">✓</div><div><h3>Verify the SHA-256 fingerprint</h3><p>After downloading, run <b>Get-FileHash OmniClip-Setup-1.0.0.exe</b> in PowerShell. It must match:</p><code class="hash">OmniClip-Setup-1.0.0.exe<br>6778E07EE54E6C31CDFCBBA22C51133DC4DCAB29A7A07FD5A53B5E2F8AACE607</code><code class="hash">OmniClip.exe (portable)<br>960AFC46CE86771D3B8C3EA77B8405B8E29F637B6F4BDF41509DD4F3D1C05379</code></div></div>
+    <div class="vrow"><div class="tick">✓</div><div><h3>Private by design</h3><p>No account, no telemetry, no screenshot uploads. Activation checks only your email and an anonymous PC ID. The installer needs no admin rights and removes itself cleanly from Windows Installed apps.</p></div></div>
+  </div>
+</section>
+
+<section class="alt" id="faq">
+  <div class="wrap">
+    <h2>Questions</h2>
+    <p class="sub">&nbsp;</p>
+    <details><summary>Do I need to install it?</summary><p>No. OmniClip is a single .exe file. Double-click it and it appears in your system tray.</p></details>
+    <details><summary>What's the capture shortcut?</summary><p>Ctrl+Shift+X captures a region from anywhere. Ctrl+Alt+R starts and stops a screen recording.</p></details>
+    <details><summary>Does it upload my screenshots?</summary><p>No. Nothing is uploaded. Captures stay on your computer until you paste or save them.</p></details>
+    <details><summary>Windows says “Windows protected your PC.” Is that normal?</summary><p>That message appears for new programs that aren't yet widely downloaded or code-signed. Click “More info”, then “Run anyway”.</p></details>
+    <details><summary>Where are my files saved?</summary><p>Images go to Pictures\OmniClip and recordings to Videos\OmniClip. Recent captures are also listed inside the app.</p></details>
+    <details><summary>How do I get help or contact support?</summary><p>Email <a href="mailto:etzchaim06@gmail.com?subject=OmniClip%20support">etzchaim06@gmail.com</a>. Please include your Windows version and what happened.</p></details>
+    <details><summary>When do I get my download link after paying?</summary><p>After your payment is confirmed we email the download link to the address you gave at checkout. Please check your spam folder too. If it hasn't arrived, email <a href="mailto:etzchaim06@gmail.com?subject=OmniClip%20download%20link">etzchaim06@gmail.com</a>.</p></details>
+    <details><summary>How do I quit it?</summary><p>Closing the window keeps OmniClip in the tray. Right-click the tray icon and choose Exit OmniClip to quit completely.</p></details>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="links">
+      <a href="mailto:etzchaim06@gmail.com?subject=OmniClip%20support">Support: etzchaim06@gmail.com</a>
+      <a href="https://mleadigitalsystems.blogspot.com/">MLEA Digital Systems</a>
+      <a href="https://removetheviruses.blogspot.com/">Remove The Viruses</a>
+      <a href="https://www.facebook.com/groups/162541127139096">Facebook group</a>
+      <a href="https://www.facebook.com/profile.php?id=100064261561899">Facebook page</a>
+    </div>
+    <div>© 2026 OmniClip · MLEA Digital Systems</div>
+  </div>
+</footer>
+
+</body>
+</html>
